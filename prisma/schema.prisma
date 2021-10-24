@@ -13,11 +13,27 @@ datasource db {
 model Parent {
   id        Int      @id @default(autoincrement())
   name      String
-  surname   String
+  lastName  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   nickname  String?
   email     String
+  children  Child[]
 
   @@map("parents")
+}
+
+model Child {
+  id        Int      @id @default(autoincrement())
+  name      String
+  age       Int
+  lastName  String
+  nickname  String?
+  email     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Parent    Parent?  @relation(fields: [parentId], references: [id])
+  parentId  Int?
+
+  @@map("children")
 }

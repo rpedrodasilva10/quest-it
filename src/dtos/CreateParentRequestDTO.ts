@@ -1,6 +1,6 @@
 interface CreateParentRequestDTO {
   name: string;
-  surname: string;
+  lastName: string;
   nickname?: string;
   email: string;
 }

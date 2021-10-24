@@ -4,14 +4,19 @@ import CreateParentRequestDTO from '../dtos/CreateParentRequestDTO';
 import ParentResponseDTO from '../dtos/ParentResponseDTO';
 import AppError from '../errors/AppError';
 import prismaClient from '../prisma';
+import isValidIdPathParam from '../utils/isValidIdPathParam';
 
 class ParentService {
-  async getParentById(id: number): Promise<Parent> {
+  async getParentById(id: string): Promise<Parent> {
+    if (!isValidIdPathParam(id)) {
+      throw new AppError(`Parameter 'id' must be a valid number`);
+    }
+    const treatedId = parseInt(id);
     const prismaClient = new PrismaClient();
 
     const foundParent = await prismaClient.parent.findFirst({
       where: {
-        id,
+        id: treatedId,
       },
     });
 
@@ -26,12 +31,13 @@ class ParentService {
     const schema = Joi.object({
       name: Joi.string().required(),
       email: Joi.string().email().required(),
-      surname: Joi.string().required(),
+      lastName: Joi.string().required(),
       nickname: Joi.string(),
     });
 
     await schema.validateAsync(payload, {
       abortEarly: false,
+      stripUnknown: true,
     });
 
     console.log(`PaymentService.createParent \nData: ${JSON.stringify(payload)}`);
@@ -53,8 +59,6 @@ class ParentService {
 
     return await prismaClient.parent.findMany();
   }
-
-  async findById() {}
 }
 
 export default ParentService;

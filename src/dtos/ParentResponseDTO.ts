@@ -1,7 +1,7 @@
 interface ParentResponseDTO {
   id: number;
   name: string;
-  surname: string;
+  lastName: string;
   nickname?: string;
   createdAt: Date;
   updatedAt: Date;

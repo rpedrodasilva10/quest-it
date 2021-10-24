@@ -27,7 +27,7 @@ app.use((err: Error, request: Request, response: Response, next: NextFunction) =
   }
 
   if (err instanceof Joi.ValidationError) {
-    console.error('Joi validatin error ');
+    console.error('Joi validation error', err);
     return response.status(400).json({
       status: 'error',
       message: 'Invalid input data, check the errors object for more information',
