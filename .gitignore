@@ -135,3 +135,5 @@ Blog
 About
  Octotree
 15 days trial remained
+prisma/dev.db
+*.db-journal
