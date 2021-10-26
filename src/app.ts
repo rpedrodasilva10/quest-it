@@ -32,9 +32,9 @@ app.use((err: Error, request: Request, response: Response, next: NextFunction) =
       status: 'error',
       message: 'Invalid input data, check the errors object for more information',
       errors: err.details.map((error) => {
-        const fieldErrorDetails = {
+        const fieldErrorDetails: FieldErrorDetail = {
           field: error.context.key,
-          description: error.message.replace(/[^\w\s]/gi, ''),
+          description: error.message.replace('"', '').replace('"', ''),
         };
         return fieldErrorDetails;
       }),
