@@ -43,6 +43,22 @@ class ChildService {
 
     return createdChildrenList;
   }
+
+  async getChildrenByParentId(parentId: string) {
+    const parentService = new ParentService();
+
+    await parentService.getParentById(parentId);
+
+    const prismaClient = new PrismaClient();
+
+    const children = await prismaClient.child.findMany({
+      where: {
+        parentId: parseInt(parentId),
+      },
+    });
+
+    return children;
+  }
 }
 
 export default ChildService;
