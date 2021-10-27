@@ -18,6 +18,9 @@ class ParentService {
       where: {
         id: treatedId,
       },
+      include: {
+        children: true,
+      },
     });
 
     if (!foundParent) {
