@@ -14,6 +14,12 @@ class QuestService {
 
     return createdQuest;
   }
+
+  async getQuests() {
+    const prismaClient = new PrismaClient();
+
+    return await prismaClient.quest.findMany();
+  }
 }
 
 export default QuestService;
