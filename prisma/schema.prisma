@@ -36,23 +36,20 @@ model Child {
   parent    Parent?  @relation(fields: [parentId], references: [id])
   parentId  Int?
 
-  Quest   Quest? @relation(fields: [questId], references: [id])
-  questId Int?
   @@map("children")
 }
 
 model Quest {
-  id          Int      @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   title       String
   description String
-  children    Child[]
   stars       Int
-  startedAt   DateTime
-  finishedAt  DateTime
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  parent      Parent   @relation(fields: [parentId], references: [id])
+  startedAt   DateTime?
+  finishedAt  DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   parentId    Int
 
   @@map("quests")
+  Parent Parent @relation(fields: [parentId], references: [id])
 }
