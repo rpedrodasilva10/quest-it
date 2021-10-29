@@ -40,6 +40,10 @@ class QuestService {
 
     const quest = await this.getQuestById(questId);
 
+    if (quest.startedAt) {
+      throw new AppError(`Quest already started at ${quest.startedAt}`);
+    }
+
     const childService = new ChildService();
     const child = await childService.getChildById(childId);
 
