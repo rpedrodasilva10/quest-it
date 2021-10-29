@@ -1,6 +1,8 @@
 import { PrismaClient } from '.prisma/client';
 import Joi from 'joi';
 import { CreateChildRequestDTO } from '../dtos/CreateChilldRequestDTO';
+import AppError from '../errors/AppError';
+import isValidIdPathParam from '../utils/isValidIdPathParam';
 import ParentService from './ParentService';
 
 class ChildService {
@@ -58,6 +60,20 @@ class ChildService {
     });
 
     return children;
+  }
+
+  async getChildById(childId: string) {
+    if (isValidIdPathParam(childId)) {
+      const prismaClient = new PrismaClient();
+      const child = await prismaClient.child.findFirst({ where: { id: Number(childId) } });
+
+      if (!child) {
+        throw new AppError(`Child not found with id '${childId}'`);
+      }
+      return child;
+    }
+
+    throw new AppError(`Value '${childId}' is an invalid child id `);
   }
 }
 

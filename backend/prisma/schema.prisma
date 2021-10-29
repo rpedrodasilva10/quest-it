@@ -36,6 +36,7 @@ model Child {
   parent    Parent?  @relation(fields: [parentId], references: [id])
   parentId  Int?
 
+  Quest Quest[]
   @@map("children")
 }
 
@@ -49,7 +50,9 @@ model Quest {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   parentId    Int
+  parent      Parent    @relation(fields: [parentId], references: [id])
+  child       Child?    @relation(fields: [childId], references: [id])
+  childId     Int?
 
   @@map("quests")
-  Parent Parent @relation(fields: [parentId], references: [id])
 }

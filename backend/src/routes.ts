@@ -5,6 +5,7 @@ import CreateQuestController from './controllers/CreateQuestController';
 import GetChildrenController from './controllers/GetChildrenController';
 import GetParentController from './controllers/GetParentsController';
 import GetQuestController from './controllers/GetQuestController';
+import StartQuestController from './controllers/StartQuestController';
 
 const router = Router();
 
@@ -17,5 +18,6 @@ router.get('/parents/:id/children', new GetChildrenController().getChildrenByPar
 router.post('/parents/:id/quests', new CreateQuestController().createQuest);
 
 router.get('/quests', new GetQuestController().getAllQuests);
+router.post('/quests/:questId/children/:childId', new StartQuestController().startQuest);
 
 export default router;
