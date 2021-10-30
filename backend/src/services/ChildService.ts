@@ -88,6 +88,19 @@ class ChildService {
 
     throw new AppError(`Value '${childId}' is an invalid child id `);
   }
+
+  async getChildByEmailAndPassword(email: string, password: string) {
+    console.log('ChildService.getChildByEmail');
+    const prismaClient = new PrismaClient();
+    const child = await prismaClient.child.findFirst({
+      where: {
+        email,
+        password,
+      },
+    });
+
+    return child;
+  }
 }
 
 export default ChildService;

@@ -1,11 +1,17 @@
 import { Router } from 'express';
+import AuthController from './controllers/AuthController';
 import ChildController from './controllers/ChildController';
 import ParentController from './controllers/ParentController';
 import QuestController from './controllers/QuestController';
+import authMiddleware from './middlewares/auth';
 
 const router = Router();
 
+router.post('/authenticate', AuthController.authenticate);
 router.post('/parents', ParentController.createParent);
+
+router.use(authMiddleware);
+
 router.get('/parents', ParentController.getAllParents);
 router.get('/parents/:id', ParentController.getParentById);
 

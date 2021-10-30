@@ -17,7 +17,7 @@ model Parent {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   nickname  String?
-  email     String
+  email     String   @unique
   children  Child[]
   password  String
   age       Int
@@ -32,7 +32,7 @@ model Child {
   age       Int
   lastName  String
   nickname  String?
-  email     String
+  email     String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   parent    Parent?  @relation(fields: [parentId], references: [id])

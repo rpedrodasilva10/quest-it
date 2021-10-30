@@ -95,6 +95,19 @@ class ParentService {
 
     return children;
   }
+
+  async getParentByEmailAndPassword(email: string, password: string) {
+    console.log('ParentService.getParentByEmail');
+    const prismaClient = new PrismaClient();
+    const parent = await prismaClient.parent.findFirst({
+      where: {
+        email,
+        password,
+      },
+    });
+
+    return parent;
+  }
 }
 
 export default ParentService;
