@@ -87,6 +87,10 @@ class QuestService {
 
     const quest = await this.getQuestById(id);
 
+    if (quest.finishedAt) {
+      throw new AppError(`Quest already finished`);
+    }
+
     if (!quest.startedAt) {
       throw new AppError(`Quest not started yet`);
     }
