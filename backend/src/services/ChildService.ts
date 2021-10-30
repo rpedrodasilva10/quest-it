@@ -1,7 +1,7 @@
-import { PrismaClient } from '.prisma/client';
 import Joi from 'joi';
 import { CreateChildRequestDTO } from '../dtos/CreateChilldRequestDTO';
 import AppError from '../errors/AppError';
+import prismaClient from '../prisma';
 import isValidIdPathParam from '../utils/isValidIdPathParam';
 import ParentService from './ParentService';
 
@@ -28,8 +28,6 @@ class ChildService {
 
     const parent = await parentService.getParentById(payload.parentId);
 
-    const prismaClient = new PrismaClient();
-
     const createdChildrenList = Promise.all(
       payload.children.map(async (child) => {
         const created = await prismaClient.child.create({
@@ -53,8 +51,6 @@ class ChildService {
 
     await parentService.getParentById(parentId);
 
-    const prismaClient = new PrismaClient();
-
     const children = await prismaClient.child.findMany({
       select: {
         id: true,
@@ -77,7 +73,6 @@ class ChildService {
   async getChildById(childId: string) {
     console.log('ChildService.getChildById');
     if (isValidIdPathParam(childId)) {
-      const prismaClient = new PrismaClient();
       const child = await prismaClient.child.findFirst({ where: { id: Number(childId) } });
 
       if (!child) {
@@ -91,7 +86,7 @@ class ChildService {
 
   async getChildByEmailAndPassword(email: string, password: string) {
     console.log('ChildService.getChildByEmail');
-    const prismaClient = new PrismaClient();
+
     const child = await prismaClient.child.findFirst({
       where: {
         email,

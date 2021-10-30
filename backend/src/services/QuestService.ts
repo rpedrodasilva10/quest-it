@@ -1,7 +1,7 @@
-import { PrismaClient } from '.prisma/client';
 import Joi from 'joi';
 import CreateQuestRequestDTO from '../dtos/CreateQuestRequestDTO';
 import AppError from '../errors/AppError';
+import prismaClient from '../prisma';
 import isValidIdPathParam from '../utils/isValidIdPathParam';
 import ChildService from './ChildService';
 
@@ -16,8 +16,6 @@ class QuestService {
 
     await schema.validateAsync(quest);
 
-    const prismaClient = new PrismaClient();
-
     const createdQuest = await prismaClient.quest.create({
       data: {
         parentId,
@@ -30,15 +28,12 @@ class QuestService {
 
   async getQuests() {
     console.log('QuestService.getQuests');
-    const prismaClient = new PrismaClient();
 
     return await prismaClient.quest.findMany();
   }
 
   async startQuest(questId: string, childId: string) {
     console.log('QuestService.startQuest');
-
-    const prismaClient = new PrismaClient();
 
     const quest = await this.getQuestById(questId);
 
@@ -63,8 +58,6 @@ class QuestService {
   async getQuestById(id: string) {
     console.log('QuestService.getQuestById');
     if (isValidIdPathParam(id)) {
-      const prismaClient = new PrismaClient();
-
       const quest = await prismaClient.quest.findFirst({
         where: {
           id: Number(id),
@@ -82,8 +75,6 @@ class QuestService {
 
   async finishQuest(id: string) {
     console.log('QuestService.finishQuest');
-
-    const prismaClient = new PrismaClient();
 
     const quest = await this.getQuestById(id);
 

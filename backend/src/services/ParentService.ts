@@ -1,4 +1,3 @@
-import { PrismaClient } from '.prisma/client';
 import Joi from 'joi';
 import CreateParentRequestDTO from '../dtos/CreateParentRequestDTO';
 import ParentResponseDTO from '../dtos/ParentResponseDTO';
@@ -14,7 +13,6 @@ class ParentService {
       throw new AppError(`Parameter 'id' must be a valid number`);
     }
     const treatedId = parseInt(id);
-    const prismaClient = new PrismaClient();
 
     const foundParent = await prismaClient.parent.findFirst({
       select: {
@@ -71,7 +69,6 @@ class ParentService {
 
   async getAllParents(): Promise<ParentResponseDTO[]> {
     console.log('ParentService.getAllParents');
-    const prismaClient = new PrismaClient();
 
     return await prismaClient.parent.findMany({
       select: {
@@ -98,7 +95,7 @@ class ParentService {
 
   async getParentByEmailAndPassword(email: string, password: string) {
     console.log('ParentService.getParentByEmail');
-    const prismaClient = new PrismaClient();
+
     const parent = await prismaClient.parent.findFirst({
       where: {
         email,
