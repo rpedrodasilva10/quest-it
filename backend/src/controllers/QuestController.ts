@@ -30,6 +30,15 @@ class QuestController {
     const startedQuest = await questService.startQuest(id, childId);
     return res.status(201).json(startedQuest);
   }
+
+  async finishQuest(req: Request, res: Response) {
+    const { id } = req.params;
+
+    const questService = new QuestService();
+
+    const startedQuest = await questService.finishQuest(id);
+    return res.status(201).json(startedQuest);
+  }
 }
 
 export default new QuestController();

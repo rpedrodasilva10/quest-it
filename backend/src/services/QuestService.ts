@@ -79,6 +79,27 @@ class QuestService {
 
     throw new AppError(`Value '${id}' is an invalid quest id number`);
   }
+
+  async finishQuest(id: string) {
+    console.log('QuestService.finishQuest');
+
+    const prismaClient = new PrismaClient();
+
+    const quest = await this.getQuestById(id);
+
+    if (!quest.startedAt) {
+      throw new AppError(`Quest not started yet`);
+    }
+
+    return await prismaClient.quest.update({
+      where: {
+        id: quest.id,
+      },
+      data: {
+        finishedAt: new Date(),
+      },
+    });
+  }
 }
 
 export default QuestService;

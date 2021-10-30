@@ -15,5 +15,6 @@ router.get('/parents/:id/children', ParentController.getChildren);
 router.post('/parents/:id/quests', QuestController.createQuest);
 router.get('/quests', QuestController.getAllQuests);
 router.post('/quests/:id/start', QuestController.startQuest);
+router.post('/quests/:id/finish', QuestController.finishQuest);
 
 export default router;
