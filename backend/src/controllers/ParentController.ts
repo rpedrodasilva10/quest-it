@@ -23,6 +23,13 @@ class ParentController {
 
     return res.status(201).json(createdParent);
   }
+
+  async getChildren(req: Request, res: Response) {
+    const parentService = new ParentService();
+    const { id } = req.params;
+
+    return res.json(await parentService.getChildrenByParentId(id));
+  }
 }
 
 export default new ParentController();

@@ -21,11 +21,13 @@ class QuestController {
   }
 
   async startQuest(req: Request, res: Response) {
-    const { questId, childId } = req.params;
+    const { id } = req.params;
+
+    const { childId } = req.body;
 
     const questService = new QuestService();
 
-    const startedQuest = await questService.startQuest(questId, childId);
+    const startedQuest = await questService.startQuest(id, childId);
     return res.status(201).json(startedQuest);
   }
 }

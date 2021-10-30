@@ -9,7 +9,7 @@ class ChildService {
   async createChild(payload: CreateChildRequestDTO) {
     console.log('ChildService.createChild');
     const schema = Joi.object({
-      parentId: Joi.string().required(),
+      parentId: Joi.number().required(),
       children: Joi.array().items({
         name: Joi.string().required(),
         age: Joi.number().required(),
@@ -47,6 +47,7 @@ class ChildService {
   }
 
   async getChildrenByParentId(parentId: string) {
+    console.log('ChildService.getChildrenbyParentId');
     const parentService = new ParentService();
 
     await parentService.getParentById(parentId);
@@ -58,6 +59,8 @@ class ChildService {
         parentId: parseInt(parentId),
       },
     });
+
+    console.log('got children', children);
 
     return children;
   }
