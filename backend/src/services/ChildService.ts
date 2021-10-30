@@ -16,12 +16,12 @@ class ChildService {
         lastName: Joi.string().required(),
         nickname: Joi.string().optional(),
         email: Joi.string().email().required(),
+        password: Joi.string().required(),
       }),
     });
 
     await schema.validateAsync(payload, {
       abortEarly: false,
-      stripUnknown: true,
     });
 
     const parentService = new ParentService();
@@ -32,12 +32,14 @@ class ChildService {
 
     const createdChildrenList = Promise.all(
       payload.children.map(async (child) => {
-        return await prismaClient.child.create({
+        const created = await prismaClient.child.create({
           data: {
             ...child,
             parentId: parent.id,
           },
         });
+        delete created.password;
+        return created;
       })
     );
 
@@ -53,6 +55,16 @@ class ChildService {
     const prismaClient = new PrismaClient();
 
     const children = await prismaClient.child.findMany({
+      select: {
+        id: true,
+        name: true,
+        lastName: true,
+        nickname: true,
+        age: true,
+        email: true,
+        createdAt: true,
+        updatedAt: true,
+      },
       where: {
         parentId: parseInt(parentId),
       },

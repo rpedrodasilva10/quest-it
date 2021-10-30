@@ -1,4 +1,4 @@
-import { Parent, PrismaClient } from '.prisma/client';
+import { PrismaClient } from '.prisma/client';
 import Joi from 'joi';
 import CreateParentRequestDTO from '../dtos/CreateParentRequestDTO';
 import ParentResponseDTO from '../dtos/ParentResponseDTO';
@@ -8,7 +8,7 @@ import isValidIdPathParam from '../utils/isValidIdPathParam';
 import ChildService from './ChildService';
 
 class ParentService {
-  async getParentById(id: string): Promise<Parent> {
+  async getParentById(id: string): Promise<ParentResponseDTO> {
     console.log('ParentService.getParentById');
     if (!isValidIdPathParam(id)) {
       throw new AppError(`Parameter 'id' must be a valid number`);
@@ -17,11 +17,18 @@ class ParentService {
     const prismaClient = new PrismaClient();
 
     const foundParent = await prismaClient.parent.findFirst({
+      select: {
+        id: true,
+        name: true,
+        lastName: true,
+        nickname: true,
+        age: true,
+        email: true,
+        createdAt: true,
+        updatedAt: true,
+      },
       where: {
         id: treatedId,
-      },
-      include: {
-        children: true,
       },
     });
 
@@ -54,6 +61,8 @@ class ParentService {
         },
       });
 
+      delete created.password;
+
       return created;
     } catch (error) {
       throw new AppError('Invalid entry data! Check your payload', 400);
@@ -64,7 +73,18 @@ class ParentService {
     console.log('ParentService.getAllParents');
     const prismaClient = new PrismaClient();
 
-    return await prismaClient.parent.findMany();
+    return await prismaClient.parent.findMany({
+      select: {
+        id: true,
+        name: true,
+        lastName: true,
+        nickname: true,
+        age: true,
+        email: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
   }
 
   async getChildrenByParentId(parentId: string) {

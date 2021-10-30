@@ -3,6 +3,8 @@ interface CreateParentRequestDTO {
   lastName: string;
   nickname?: string;
   email: string;
+  password: string;
+  age: number;
 }
 
 export default CreateParentRequestDTO;
