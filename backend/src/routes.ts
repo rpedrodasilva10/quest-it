@@ -1,23 +1,19 @@
 import { Router } from 'express';
-import CreateChildController from './controllers/CreateChildController';
-import CreateParentController from './controllers/CreateParentController';
-import CreateQuestController from './controllers/CreateQuestController';
-import GetChildrenController from './controllers/GetChildrenController';
-import GetParentController from './controllers/GetParentsController';
-import GetQuestController from './controllers/GetQuestController';
-import StartQuestController from './controllers/StartQuestController';
+import ChildController from './controllers/ChildController';
+import ParentController from './controllers/ParentController';
+import QuestController from './controllers/QuestController';
 
 const router = Router();
 
-router.post('/parents', new CreateParentController().createParent);
-router.get('/parents', new GetParentController().getAllParents);
-router.get('/parents/:id', new GetParentController().getParentById);
-router.post('/parents/:id/children', new CreateChildController().createChild);
-router.get('/parents/:id/children', new GetChildrenController().getChildrenByParentId);
+router.post('/parents', ParentController.createParent);
+router.get('/parents', ParentController.getAllParents);
+router.get('/parents/:id', ParentController.getParentById);
 
-router.post('/parents/:id/quests', new CreateQuestController().createQuest);
+router.post('/parents/:id/children', ChildController.createChild);
+router.get('/parents/:id/children', ChildController.getChildrenByParentId);
 
-router.get('/quests', new GetQuestController().getAllQuests);
-router.post('/quests/:questId/children/:childId', new StartQuestController().startQuest);
+router.post('/parents/:id/quests', QuestController.createQuest);
+router.get('/quests', QuestController.getAllQuests);
+router.post('/quests/:questId/children/:childId/startQuest', QuestController.startQuest);
 
 export default router;
