@@ -7,6 +7,7 @@ import ChildService from './ChildService';
 
 class QuestService {
   async createQuest(parentId: number, quest: CreateQuestRequestDTO) {
+    console.log('QuestService.createQuest');
     const schema = Joi.object({
       title: Joi.string().required(),
       description: Joi.string().required(),
@@ -28,13 +29,14 @@ class QuestService {
   }
 
   async getQuests() {
+    console.log('QuestService.getQuests');
     const prismaClient = new PrismaClient();
 
     return await prismaClient.quest.findMany();
   }
 
   async startQuest(questId: string, childId: string) {
-    console.log('Starting quest');
+    console.log('QuestService.startQuest');
 
     const prismaClient = new PrismaClient();
 
@@ -59,6 +61,7 @@ class QuestService {
   }
 
   async getQuestById(id: string) {
+    console.log('QuestService.getQuestById');
     if (isValidIdPathParam(id)) {
       const prismaClient = new PrismaClient();
 

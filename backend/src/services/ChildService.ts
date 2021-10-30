@@ -24,8 +24,6 @@ class ChildService {
       stripUnknown: true,
     });
 
-    console.log('Treated payload: ', JSON.stringify(payload));
-
     const parentService = new ParentService();
 
     const parent = await parentService.getParentById(payload.parentId);
@@ -60,12 +58,11 @@ class ChildService {
       },
     });
 
-    console.log('got children', children);
-
     return children;
   }
 
   async getChildById(childId: string) {
+    console.log('ChildService.getChildById');
     if (isValidIdPathParam(childId)) {
       const prismaClient = new PrismaClient();
       const child = await prismaClient.child.findFirst({ where: { id: Number(childId) } });
