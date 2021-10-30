@@ -19,6 +19,8 @@ model Parent {
   nickname  String?
   email     String
   children  Child[]
+  password  String
+  age       Int
 
   Quest Quest[]
   @@map("parents")
@@ -35,8 +37,9 @@ model Child {
   updatedAt DateTime @updatedAt
   parent    Parent?  @relation(fields: [parentId], references: [id])
   parentId  Int?
+  password  String
+  Quest     Quest[]
 
-  Quest Quest[]
   @@map("children")
 }
 

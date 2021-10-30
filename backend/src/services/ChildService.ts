@@ -38,6 +38,7 @@ class ChildService {
             parentId: parent.id,
           },
         });
+
         delete created.password;
         return created;
       })
