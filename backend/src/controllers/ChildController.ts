@@ -4,7 +4,6 @@ import ChildService from '../services/ChildService';
 
 class ChildController {
   async createChild(req: Request, res: Response) {
-    console.log('Creating child');
     const service = new ChildService();
 
     const childrenPayload: CreateChildRequestDTO = {
