@@ -5,19 +5,43 @@ export const Container = styled.div``;
 export const Title = styled.h1``;
 
 export const Content = styled.div`
+  margin: 56px auto;
+  width: 400px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
-  //justify-content: center;
 
-  margin-top: 48px;
+  background-color: #5e615f3e;
   border: solid #fff 1px;
 
-  //height: 400px;
+  border-radius: 10px;
+
+  h3 {
+    margin: auto;
+    margin-top: 28px;
+  }
 
   form {
+    margin: 24px;
     display: flex;
     flex-direction: column;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  ul {
+    display: flex;
+
+    li {
+      display: flex;
+
+      & + li {
+        margin-left: 20px;
+      }
+    }
   }
 `;
 

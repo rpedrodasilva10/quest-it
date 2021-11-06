@@ -1,7 +1,10 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { FiFacebook, FiGithub, FiInstagram, FiLock, FiLogIn, FiMail } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import { Container, Content, FormInputLabel, Title } from './styles';
+import Button from '../components/Button';
+import Input from '../components/Input';
+import { Container, Content } from './styles';
 
 type FormData = {
   email: string;
@@ -13,35 +16,48 @@ const Login: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<FormData>();
 
   const onSubmit = (data: FormData) => console.log('Form data', data);
 
   return (
     <Container>
-      <Title>
-        This is my title quest it
-        <Content>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <FormInputLabel>Email</FormInputLabel>
+      <Content>
+        <h3>Faça seu login</h3>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Input placeholder="Digite seu email" icon={FiMail} name="email" register={register}></Input>
+          <Input
+            placeholder="Digite sua senha"
+            icon={FiLock}
+            name="password"
+            register={register}
+            type="password"
+          ></Input>
 
-            <input
-              placeholder="Digite seu email"
-              {...register('email', {
-                required: true,
-              })}
-            />
-            <FormInputLabel>Senha</FormInputLabel>
-            <input type="password" placeholder="Digite sua senha" {...register('password')}></input>
+          <span>Esqueci minha senha 😢</span>
 
-            <span>Esqueci minha senha :(</span>
+          {/* <input type="submit" /> */}
+          <Button icon={FiLogIn} type="submit">
+            Entrar
+          </Button>
+        </form>
+        <Link to="#">Ou cadastre-se</Link>
+        {/* Social media */}
 
-            <button type="submit">Entrar</button>
-          </form>
+        <p>Cadastre-se usando:</p>
 
-          <Link to="#">Ou cadastre-se</Link>
-        </Content>
-      </Title>
+        <ul>
+          <li>
+            <FiFacebook size={20} />
+          </li>
+          <li>
+            <FiGithub size={20} />
+          </li>
+          <li>
+            <FiInstagram size={20} />
+          </li>
+        </ul>
+      </Content>
     </Container>
   );
 };
