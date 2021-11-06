@@ -14,6 +14,11 @@ export const Content = styled.div`
   border: solid #fff 1px;
 
   //height: 400px;
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 export const LoginForm = styled.form`
