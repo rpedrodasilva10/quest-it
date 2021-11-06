@@ -1,3 +1,4 @@
+import { compareSync } from 'bcrypt';
 import Joi from 'joi';
 import jwt from 'jsonwebtoken';
 import authConfig from '../config/auth';
@@ -35,25 +36,33 @@ class AuthService {
     });
 
     const parentService = new ParentService();
-    const parent = await parentService.getParentByEmailAndPassword(email, password);
+    const parent = await parentService.getParentByEmail(email);
 
     const childService = new ChildService();
-    const child = await childService.getChildByEmailAndPassword(email, password);
+    const child = await childService.getChildByEmail(email);
 
     if (!parent && !child) {
       throw new AppError('Invalid credentials! Check your email and password', 401);
     }
+
     let user;
     let userType: 'PARENT' | 'CHILD';
+    let encryptedUserPassword;
 
     if (parent) {
       user = parent;
       userType = 'PARENT';
+      encryptedUserPassword = parent.password;
     }
 
     if (child) {
       user = child;
       userType = 'CHILD';
+      encryptedUserPassword = child.password;
+    }
+
+    if (!compareSync(password, encryptedUserPassword)) {
+      throw new AppError('Invalid credentials! Check your email and password', 401);
     }
 
     const { id, name, nickname } = user;

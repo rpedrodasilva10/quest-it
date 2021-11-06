@@ -1,3 +1,4 @@
+import { hashSync } from 'bcrypt';
 import Joi from 'joi';
 import { CreateChildRequestDTO } from '../dtos/CreateChilldRequestDTO';
 import AppError from '../errors/AppError';
@@ -30,9 +31,11 @@ class ChildService {
 
     const createdChildrenList = Promise.all(
       payload.children.map(async (child) => {
+        const { password, ...payloadWithoutPassword } = child;
         const created = await prismaClient.child.create({
           data: {
-            ...child,
+            password: hashSync(password, parseInt(process.env.PASSWORD_SALT_ROUNDS)),
+            ...payloadWithoutPassword,
             parentId: parent.id,
           },
         });
@@ -84,13 +87,12 @@ class ChildService {
     throw new AppError(`Value '${childId}' is an invalid child id `);
   }
 
-  async getChildByEmailAndPassword(email: string, password: string) {
+  async getChildByEmail(email: string) {
     console.log('ChildService.getChildByEmail');
 
     const child = await prismaClient.child.findFirst({
       where: {
         email,
-        password,
       },
     });
 

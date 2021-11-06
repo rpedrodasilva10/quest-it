@@ -1,3 +1,4 @@
+import { hashSync } from 'bcrypt';
 import Joi from 'joi';
 import CreateParentRequestDTO from '../dtos/CreateParentRequestDTO';
 import ParentResponseDTO from '../dtos/ParentResponseDTO';
@@ -5,7 +6,6 @@ import AppError from '../errors/AppError';
 import prismaClient from '../prisma';
 import isValidIdPathParam from '../utils/isValidIdPathParam';
 import ChildService from './ChildService';
-
 class ParentService {
   async getParentById(id: string): Promise<ParentResponseDTO> {
     console.log('ParentService.getParentById');
@@ -44,6 +44,7 @@ class ParentService {
       email: Joi.string().email().required(),
       lastName: Joi.string().required(),
       nickname: Joi.string(),
+      password: Joi.string().required(),
     });
 
     await schema.validateAsync(payload, {
@@ -51,11 +52,12 @@ class ParentService {
       stripUnknown: true,
     });
 
-    console.log(`PaymentService.createParent \nData: ${JSON.stringify(payload)}`);
+    const { password, ...payloadWithoutPassword } = payload;
     try {
       const created = await prismaClient.parent.create({
         data: {
-          ...payload,
+          password: hashSync(payload.password, parseInt(process.env.PASSWORD_SALT_ROUNDS)),
+          ...payloadWithoutPassword,
         },
       });
 
@@ -93,13 +95,12 @@ class ParentService {
     return children;
   }
 
-  async getParentByEmailAndPassword(email: string, password: string) {
+  async getParentByEmail(email: string) {
     console.log('ParentService.getParentByEmail');
 
     const parent = await prismaClient.parent.findFirst({
       where: {
         email,
-        password,
       },
     });
 
