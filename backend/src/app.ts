@@ -1,3 +1,4 @@
+import cors from 'cors';
 import 'dotenv/config';
 import express, { NextFunction, Request, Response } from 'express';
 import 'express-async-errors';
@@ -16,6 +17,7 @@ interface FieldErrorDetail {
 }
 
 app.use(express.json());
+app.use(cors());
 app.use(API_BASE_URL, router);
 
 app.use((err: Error, request: Request, response: Response, next: NextFunction) => {
