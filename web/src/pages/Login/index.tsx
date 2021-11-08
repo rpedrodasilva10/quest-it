@@ -1,12 +1,12 @@
 import axios, { AxiosError } from 'axios';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { RiFacebookCircleFill, RiGithubFill, RiInstagramFill, RiLock2Fill, RiMailFill } from 'react-icons/ri';
+import { RiFacebookCircleFill, RiGithubFill, RiLock2Fill, RiMailFill } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 import api from '../../services/api';
 import Button from '../components/Button';
 import Input from '../components/Input';
-import { Container, Content } from './styles';
+import { Container, Content, SocialMediaGroup } from './styles';
 
 type FormData = {
   email: string;
@@ -90,17 +90,16 @@ const Login: React.FC = () => {
 
         <p>Entrar com</p>
 
-        <ul>
-          <li>
-            <RiFacebookCircleFill size={28} />
-          </li>
-          <li>
-            <RiGithubFill size={28} />
-          </li>
-          <li>
-            <RiInstagramFill size={28} />
-          </li>
-        </ul>
+        <SocialMediaGroup>
+          <ul>
+            <li>
+              <RiFacebookCircleFill color="#3b5998" size={35} />
+            </li>
+            <li>
+              <RiGithubFill size={35} />
+            </li>
+          </ul>
+        </SocialMediaGroup>
       </Content>
     </Container>
   );

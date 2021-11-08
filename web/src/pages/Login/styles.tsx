@@ -45,6 +45,25 @@ export const Content = styled.div`
       justify-content: right;
       color: #333333;
     }
+
+    button {
+      font-size: 16px;
+      color: #fff;
+      line-height: 1.2;
+      text-transform: uppercase;
+
+      background: -webkit-linear-gradient(right, #00dbde, #fc00ff);
+      background: -o-linear-gradient(right, #00dbde, #fc00ff);
+      background: -moz-linear-gradient(right, #00dbde, #fc00ff);
+      background: linear-gradient(right, #00dbde, #fc00ff);
+      top: 0;
+      left: -100%;
+
+      -webkit-transition: all 0.4s;
+      -o-transition: all 0.4s;
+      -moz-transition: all 0.4s;
+      transition: all 0.4s;
+    }
   }
 
   a {
@@ -64,4 +83,11 @@ export const Content = styled.div`
   }
 `;
 
-export const SocialMediaGroup = styled.div``;
+export const SocialMediaGroup = styled.div`
+  margin: 28px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  //background-color: red;
+`;
