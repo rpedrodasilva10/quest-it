@@ -11,6 +11,7 @@ import { Container, Content, SocialMediaGroup } from './styles';
 type FormData = {
   email: string;
   password: string;
+  name?: string;
 };
 
 type AuthData = {
@@ -29,6 +30,22 @@ const Login: React.FC = () => {
   //   api.get('/parents');
   // }, []);
 
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  // } = useForm();
+  // const onSubmit = (data: any) => console.log(data);
+
+  // return (
+  //   <form onSubmit={handleSubmit(onSubmit)}>
+  //     <label htmlFor="name">Name</label>
+  //     <input id="name" {...register('name', { required: true, maxLength: 30 })} />
+  //     {errors?.name?.type === 'required' && <span>This is required</span>}
+  //     {errors?.name?.type === 'maxLength' && <span>Max length exceeded</span>}
+  //     <input type="submit" />
+  //   </form>
+  // );
   const {
     register,
     handleSubmit,
@@ -57,28 +74,40 @@ const Login: React.FC = () => {
   return (
     <Container>
       <Content>
-        <h3>Entrar</h3>
+        <h3>Login</h3>
         <form onSubmit={handleSubmit(doLogin)}>
           <Input
+            id="email"
             placeholder="Digite seu email"
             icon={RiMailFill}
-            name="email"
-            register={register}
-            registerOptions={{
-              required: true,
-            }}
+            register={register('email', {
+              required: {
+                value: true,
+                message: 'Email é obrigatório',
+              },
+              min: {
+                value: 3,
+                message: 'Mínimo de três caractéres',
+              },
+            })}
           />
+          {errors.password && <span>{errors?.password?.message}</span>}
           <Input
             placeholder="Digite sua senha"
             icon={RiLock2Fill}
-            name="password"
-            register={register}
-            registerOptions={{
-              required: true,
-            }}
+            register={register('password', {
+              required: {
+                value: true,
+                message: 'Senha é obrigatória',
+              },
+              min: {
+                value: 3,
+                message: 'Mínimo de três caractéres',
+              },
+            })}
             type="password"
-          />
-
+          ></Input>
+          {errors?.email?.type === 'required' && <span>This EMAIL required</span>}
           <Link to="#">Esqueceu sua senha?</Link>
 
           <Button type="submit">Entrar</Button>
