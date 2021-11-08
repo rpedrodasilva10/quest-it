@@ -4,15 +4,18 @@ import { IconBaseProps } from 'react-icons';
 import { Container } from './styles';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  icon?: React.ComponentType<IconBaseProps>;
   name: string;
+  icon?: React.ComponentType<IconBaseProps>;
   register: UseFormRegister<any>;
+  registerOptions?: {
+    required: boolean;
+  };
 }
-const Input: React.FC<InputProps> = ({ name, register, icon: Icon, ...rest }) => {
+const Input: React.FC<InputProps> = ({ name, register, registerOptions, icon: Icon, ...rest }) => {
   return (
     <Container hasError isFilled isFocused>
       {Icon && <Icon size={20} />}
-      <input {...register(name)} {...rest} />
+      <input {...register(name, registerOptions)} {...rest} />
     </Container>
   );
 };

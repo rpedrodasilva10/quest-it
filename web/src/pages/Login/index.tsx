@@ -1,7 +1,9 @@
+import axios, { AxiosError } from 'axios';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { FiFacebook, FiGithub, FiInstagram, FiLock, FiLogIn, FiMail } from 'react-icons/fi';
+import { RiFacebookCircleFill, RiGithubFill, RiInstagramFill, RiLock2Fill, RiMailFill } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
+import api from '../../services/api';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import { Container, Content } from './styles';
@@ -11,50 +13,92 @@ type FormData = {
   password: string;
 };
 
+type AuthData = {
+  user: {
+    id: number;
+    name: string;
+    email: string;
+    nickname: string;
+    type: string;
+  };
+  token: string;
+};
+
 const Login: React.FC = () => {
+  // useEffect(() => {
+  //   api.get('/parents');
+  // }, []);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
 
-  const onSubmit = (data: FormData) => console.log('Form data', data);
+  const doLogin = async ({ email, password }: FormData) => {
+    try {
+      const response = await api.post<AuthData>('/authenticate', {
+        email,
+        password,
+      });
+
+      console.log('Login realizado com sucesso', response);
+    } catch (error: AxiosError | any) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          alert('Credenciais inválidas');
+        }
+      } else {
+        console.log('Other', error);
+      }
+    }
+  };
 
   return (
     <Container>
       <Content>
-        <h3>Faça seu login</h3>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Input placeholder="Digite seu email" icon={FiMail} name="email" register={register}></Input>
+        <h3>Entrar</h3>
+        <form onSubmit={handleSubmit(doLogin)}>
+          <Input
+            placeholder="Digite seu email"
+            icon={RiMailFill}
+            name="email"
+            register={register}
+            registerOptions={{
+              required: true,
+            }}
+          />
           <Input
             placeholder="Digite sua senha"
-            icon={FiLock}
+            icon={RiLock2Fill}
             name="password"
             register={register}
+            registerOptions={{
+              required: true,
+            }}
             type="password"
-          ></Input>
+          />
 
-          <span>Esqueci minha senha 😢</span>
+          <Link to="#">Esqueceu sua senha?</Link>
 
-          {/* <input type="submit" /> */}
-          <Button icon={FiLogIn} type="submit">
-            Entrar
-          </Button>
+          <Button type="submit">Entrar</Button>
         </form>
-        <Link to="#">Ou cadastre-se</Link>
+
+        <Link to="#">Criar conta</Link>
+
         {/* Social media */}
 
-        <p>Cadastre-se usando:</p>
+        <p>Entrar com</p>
 
         <ul>
           <li>
-            <FiFacebook size={20} />
+            <RiFacebookCircleFill size={28} />
           </li>
           <li>
-            <FiGithub size={20} />
+            <RiGithubFill size={28} />
           </li>
           <li>
-            <FiInstagram size={20} />
+            <RiInstagramFill size={28} />
           </li>
         </ul>
       </Content>

@@ -1,31 +1,50 @@
 import styled from 'styled-components';
 
-export const Container = styled.div``;
-
-export const Title = styled.h1``;
+export const Container = styled.div`
+  width: 100%;
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+`;
 
 export const Content = styled.div`
   margin: 56px auto;
-  width: 400px;
+  width: 500px;
 
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  background-color: #5e615f3e;
-  border: solid #fff 1px;
+  background-color: #fff;
+  border: solid #ffffffe6 1px;
 
   border-radius: 10px;
 
   h3 {
+    font-size: 32px;
     margin: auto;
     margin-top: 28px;
+    color: #000;
   }
 
   form {
+    width: 80%;
     margin: 24px;
     display: flex;
     flex-direction: column;
+
+    a {
+      margin-top: 8px;
+      display: flex;
+      justify-content: right;
+      color: #333333;
+    }
   }
 
   a {
@@ -45,11 +64,4 @@ export const Content = styled.div`
   }
 `;
 
-export const LoginForm = styled.form`
-  display: flex;
-  flex-direction: column;
-`;
-
-export const FormInputLabel = styled.label`
-  font-size: 20px;
-`;
+export const SocialMediaGroup = styled.div``;
