@@ -1,4 +1,5 @@
-import axios, { AxiosError } from 'axios';
+import { yupResolver } from '@hookform/resolvers/yup';
+import axios from 'axios';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import {
@@ -10,15 +11,22 @@ import {
   RiMailLine,
 } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
+import * as yup from 'yup';
 import api from '../../services/api';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import { Container, Content, SocialMediaGroup } from './styles';
 
-type FormData = {
+const loginFormSchema = yup
+  .object({
+    email: yup.string().email('E-mail inválido!').required('Informe o e-mail!'),
+    password: yup.string().min(6, 'Mínimo ${min} caractéres').required('Informe a senha!'),
+  })
+  .required();
+
+type LoginForm = {
   email: string;
   password: string;
-  name?: string;
 };
 
 type AuthData = {
@@ -33,35 +41,16 @@ type AuthData = {
 };
 
 const Login: React.FC = () => {
-  // useEffect(() => {
-  //   api.get('/parents');
-  // }, []);
-
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm();
-  // const onSubmit = (data: any) => console.log(data);
-
-  // return (
-  //   <form onSubmit={handleSubmit(onSubmit)}>
-  //     <label htmlFor="name">Name</label>
-  //     <input id="name" {...register('name', { required: true, maxLength: 30 })} />
-  //     {errors?.name?.type === 'required' && <span>This is required</span>}
-  //     {errors?.name?.type === 'maxLength' && <span>Max length exceeded</span>}
-  //     <input type="submit" />
-  //   </form>
-  // );
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<LoginForm>({
     mode: 'onBlur',
+    resolver: yupResolver(loginFormSchema),
   });
 
-  const doLogin = async ({ email, password }: FormData) => {
+  const doLogin = async ({ email, password }: LoginForm) => {
     try {
       const response = await api.post<AuthData>('/authenticate', {
         email,
@@ -69,7 +58,7 @@ const Login: React.FC = () => {
       });
 
       console.log('Login realizado com sucesso', response);
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
           alert('Credenciais inválidas');
@@ -91,12 +80,7 @@ const Login: React.FC = () => {
             icon={RiMailLine}
             errorIcon={RiMailCloseLine}
             error={errors.email}
-            register={register('email', {
-              required: {
-                value: true,
-                message: 'Informe o e-mail',
-              },
-            })}
+            register={register('email')}
           />
 
           <Input
@@ -104,12 +88,7 @@ const Login: React.FC = () => {
             placeholder="Digite sua senha"
             icon={RiLockUnlockLine}
             errorIcon={RiLock2Line}
-            register={register('password', {
-              required: {
-                value: true,
-                message: 'Informe a senha',
-              },
-            })}
+            register={register('password')}
             error={errors.password}
             type="password"
           />

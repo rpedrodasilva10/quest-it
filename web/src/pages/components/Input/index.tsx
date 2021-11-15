@@ -15,10 +15,13 @@ const Input: React.FC<InputProps> = ({ register, error, errorIcon: ErrorIcon, ic
   const [isFocused, setIsFocused] = useState(false);
   const { onChange: registerOnChange } = { ...register };
 
-  const handleOnChange = useCallback((e: FormEvent<HTMLInputElement>) => {
-    registerOnChange(e);
-    setIsFilled(!!e.currentTarget.value);
-  }, []);
+  const handleOnChange = useCallback(
+    (e: FormEvent<HTMLInputElement>) => {
+      registerOnChange(e);
+      setIsFilled(!!e.currentTarget.value);
+    },
+    [registerOnChange]
+  );
 
   const handleOnBlur = useCallback((e: FormEvent<HTMLInputElement>) => {
     setIsFocused(false);
