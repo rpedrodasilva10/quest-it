@@ -1,7 +1,14 @@
 import axios, { AxiosError } from 'axios';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { RiFacebookCircleFill, RiGithubFill, RiLock2Fill, RiMailFill } from 'react-icons/ri';
+import {
+  RiFacebookCircleFill,
+  RiGithubFill,
+  RiLock2Line,
+  RiLockUnlockLine,
+  RiMailCloseLine,
+  RiMailLine,
+} from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 import api from '../../services/api';
 import Button from '../components/Button';
@@ -50,7 +57,9 @@ const Login: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<FormData>({
+    mode: 'onBlur',
+  });
 
   const doLogin = async ({ email, password }: FormData) => {
     try {
@@ -79,35 +88,32 @@ const Login: React.FC = () => {
           <Input
             id="email"
             placeholder="Digite seu email"
-            icon={RiMailFill}
+            icon={RiMailLine}
+            errorIcon={RiMailCloseLine}
+            error={errors.email}
             register={register('email', {
               required: {
                 value: true,
-                message: 'Email é obrigatório',
-              },
-              min: {
-                value: 3,
-                message: 'Mínimo de três caractéres',
+                message: 'Informe o e-mail',
               },
             })}
           />
-          {errors.password && <span>{errors?.password?.message}</span>}
+
           <Input
+            id="password"
             placeholder="Digite sua senha"
-            icon={RiLock2Fill}
+            icon={RiLockUnlockLine}
+            errorIcon={RiLock2Line}
             register={register('password', {
               required: {
                 value: true,
-                message: 'Senha é obrigatória',
-              },
-              min: {
-                value: 3,
-                message: 'Mínimo de três caractéres',
+                message: 'Informe a senha',
               },
             })}
+            error={errors.password}
             type="password"
-          ></Input>
-          {errors?.email?.type === 'required' && <span>This EMAIL required</span>}
+          />
+
           <Link to="#">Esqueceu sua senha?</Link>
 
           <Button type="submit">Entrar</Button>

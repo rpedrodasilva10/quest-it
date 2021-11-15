@@ -1,5 +1,5 @@
-import { createGlobalStyle } from 'styled-components';
-import backgroundImg from '../assets/images/bg-01.jpg';
+import { createGlobalStyle } from "styled-components";
+import backgroundImg from "../assets/images/bg-01.jpg";
 
 export default createGlobalStyle`
   * {
@@ -16,6 +16,16 @@ export default createGlobalStyle`
     -o-background-size: cover;
     background-size: cover;
     -webkit-font-smoothing: antialiased;
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+
+    input:-webkit-autofill:active {
+      -webkit-box-shadow: 0 0 0 30px white inset !important;
+      box-shadow: 0 0 0 30px white inset !important;
+    }
+
   }
 
   body, input, button {
