@@ -10,7 +10,7 @@ import {
   RiMailCloseLine,
   RiMailLine,
 } from 'react-icons/ri';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import * as yup from 'yup';
@@ -33,6 +33,7 @@ const loginFormSchema = yup
   .required();
 
 const Login: React.FC = () => {
+  const history = useHistory();
   const { signIn } = useAuth();
   const {
     register,
@@ -49,6 +50,7 @@ const Login: React.FC = () => {
     async ({ email, password }: LoginForm) => {
       try {
         await signIn({ email, password });
+        history.push('/dashboard');
         toast.success('Login realizado com sucesso');
       } catch (error: any) {
         if (axios.isAxiosError(error)) {

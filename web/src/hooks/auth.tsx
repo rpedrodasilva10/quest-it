@@ -32,7 +32,7 @@ const AuthProvider: React.FC = ({ children }) => {
     const { token, user } = response.data;
 
     localStorage.setItem('@QuestIt:token', token);
-    localStorage.setItem('@QuestIt:user', user);
+    localStorage.setItem('@QuestIt:user', JSON.stringify(user));
 
     setAuthData({ token, user });
   }, []);
