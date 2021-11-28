@@ -13,7 +13,7 @@ class ChildService {
       parentId: Joi.number().required(),
       children: Joi.array().items({
         name: Joi.string().required(),
-        age: Joi.number().required(),
+        birthDate: Joi.string().required(),
         lastName: Joi.string().required(),
         nickname: Joi.string().optional(),
         email: Joi.string().email().required(),

@@ -1,7 +1,7 @@
 export default interface ChildResponseDTO {
   id: number;
   name: string;
-  age: number;
+  birthDate: string;
   lastName: string;
   nickname?: string;
   email: string;
