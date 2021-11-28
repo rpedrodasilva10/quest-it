@@ -1,7 +1,7 @@
 interface CreateChildResponseDTO {
   id: number;
   name: string;
-  birthDate: string;
+  birthDate: String;
   lastName: string;
   nickname?: string;
   email: string;

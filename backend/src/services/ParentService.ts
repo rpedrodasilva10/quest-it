@@ -45,6 +45,7 @@ class ParentService {
       lastName: Joi.string().required(),
       nickname: Joi.string(),
       password: Joi.string().required(),
+      birthDate: Joi.string().isoDate().required(),
     });
 
     await schema.validateAsync(payload, {
