@@ -18,7 +18,6 @@ class ParentService {
       select: {
         id: true,
         name: true,
-
         email: true,
         createdAt: true,
         updatedAt: true,
@@ -40,8 +39,6 @@ class ParentService {
     const schema = Joi.object({
       name: Joi.string().required(),
       email: Joi.string().email().required(),
-
-      nickname: Joi.string(),
       password: Joi.string().required(),
     });
 
@@ -50,20 +47,31 @@ class ParentService {
       stripUnknown: true,
     });
 
-    const { password, ...payloadWithoutPassword } = payload;
+    const { password, email, ...payloadRest } = payload;
     try {
+      const parent = await this.getParentByEmail(email);
+
+      if (parent) {
+        throw new AppError('An account already exists with this e-mail', 400);
+      }
+
       const created = await prismaClient.parent.create({
         data: {
           password: hashSync(payload.password, parseInt(process.env.PASSWORD_SALT_ROUNDS)),
-          ...payloadWithoutPassword,
+          email,
+          ...payloadRest,
         },
       });
 
       delete created.password;
 
       return created;
-    } catch (error) {
-      throw new AppError('Invalid entry data! Check your payload', 400);
+    } catch (error: AppError | any) {
+      if (error instanceof AppError) {
+        throw new AppError(error.message, error.statusCode);
+      }
+      console.error('');
+      throw new AppError('Invalid entry data! Check your payload', 500);
     }
   }
 
@@ -74,7 +82,6 @@ class ParentService {
       select: {
         id: true,
         name: true,
-
         email: true,
         createdAt: true,
         updatedAt: true,

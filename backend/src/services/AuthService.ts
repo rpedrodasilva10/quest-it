@@ -11,7 +11,6 @@ interface TokenResponse {
     id: number;
     name: string;
     email: string;
-    nickname?: string;
     type: 'PARENT' | 'CHILD';
   };
   token: string;
@@ -65,7 +64,7 @@ class AuthService {
       throw new AppError('Invalid credentials! Check your email and password', 401);
     }
 
-    const { id, name, nickname } = user;
+    const { id, name } = user;
 
     const token = jwt.sign({ id, userType }, authConfig.secret, {
       expiresIn: authConfig.expiresIn,
@@ -76,7 +75,6 @@ class AuthService {
         id,
         name,
         email,
-        nickname,
         type: parent ? 'PARENT' : 'CHILD',
       },
 
