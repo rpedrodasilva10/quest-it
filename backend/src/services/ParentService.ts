@@ -18,9 +18,7 @@ class ParentService {
       select: {
         id: true,
         name: true,
-        lastName: true,
-        nickname: true,
-        birthDate: true,
+
         email: true,
         createdAt: true,
         updatedAt: true,
@@ -42,10 +40,9 @@ class ParentService {
     const schema = Joi.object({
       name: Joi.string().required(),
       email: Joi.string().email().required(),
-      lastName: Joi.string().required(),
+
       nickname: Joi.string(),
       password: Joi.string().required(),
-      birthDate: Joi.string().isoDate().required(),
     });
 
     await schema.validateAsync(payload, {
@@ -77,9 +74,7 @@ class ParentService {
       select: {
         id: true,
         name: true,
-        lastName: true,
-        nickname: true,
-        birthDate: true,
+
         email: true,
         createdAt: true,
         updatedAt: true,

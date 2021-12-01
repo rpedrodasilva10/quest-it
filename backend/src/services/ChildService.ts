@@ -13,9 +13,6 @@ class ChildService {
       parentId: Joi.number().required(),
       children: Joi.array().items({
         name: Joi.string().required(),
-        birthDate: Joi.string().isoDate().required(),
-        lastName: Joi.string().required(),
-        nickname: Joi.string().optional(),
         email: Joi.string().email().required(),
         password: Joi.string().required(),
       }),
@@ -58,9 +55,7 @@ class ChildService {
       select: {
         id: true,
         name: true,
-        lastName: true,
-        nickname: true,
-        birthDate: true,
+
         email: true,
         createdAt: true,
         updatedAt: true,

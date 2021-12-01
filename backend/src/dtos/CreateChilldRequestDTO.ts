@@ -1,6 +1,6 @@
 interface ChildInChildrenRequestDTO {
   name: string;
-  birthDate: String;
+
   lastName: string;
   nickname?: string;
   email: string;

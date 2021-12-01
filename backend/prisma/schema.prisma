@@ -13,25 +13,19 @@ datasource db {
 model Parent {
   id        Int      @id @default(autoincrement())
   name      String
-  lastName  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  nickname  String?
   email     String   @unique
   children  Child[]
   password  String
-  birthDate String
+  Quest     Quest[]
 
-  Quest Quest[]
   @@map("parents")
 }
 
 model Child {
   id        Int      @id @default(autoincrement())
   name      String
-  birthDate String
-  lastName  String
-  nickname  String?
   email     String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

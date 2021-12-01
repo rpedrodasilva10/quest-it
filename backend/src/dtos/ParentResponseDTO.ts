@@ -6,7 +6,6 @@ interface ParentResponseDTO {
   createdAt: Date;
   updatedAt: Date;
   email: string;
-  birthDate: String;
 }
 
 export default ParentResponseDTO;
