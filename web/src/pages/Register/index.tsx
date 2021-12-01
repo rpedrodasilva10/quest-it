@@ -2,61 +2,57 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
 import React, { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
-import {
-  RiFacebookCircleFill,
-  RiGithubFill,
-  RiLock2Line,
-  RiLockUnlockLine,
-  RiMailCloseLine,
-  RiMailLine,
-} from 'react-icons/ri';
-import { Link, useHistory } from 'react-router-dom';
+import { RiLock2Line, RiLockUnlockLine, RiMailCloseLine, RiMailLine, RiUser2Fill } from 'react-icons/ri';
+import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
-import { useAuth } from '../../hooks/auth';
+import api from '../../services/api';
 import Button from '../components/Button';
 import Input from '../components/Input';
-import { Container, Content, SocialMediaGroup } from './styles';
+import { Container, Content } from './styles';
 
-type LoginForm = {
+type RegisterFormData = {
   email: string;
+  name: string;
   password: string;
 };
 
-const loginFormSchema = yup
+const RegisterFormSchema = yup
   .object({
+    name: yup.string().required('Informe o nome'),
     email: yup.string().email('E-mail inválido!').required('Informe o e-mail!'),
     // eslint-disable-next-line
     password: yup.string().min(6, 'Mínimo ${min} caractéres').required('Informe a senha!'),
   })
   .required();
 
-const Login: React.FC = () => {
+const Register: React.FC = () => {
   const history = useHistory();
-  const { signIn } = useAuth();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginForm>({
+  } = useForm<RegisterFormData>({
     mode: 'onBlur',
-    resolver: yupResolver(loginFormSchema, {
+    resolver: yupResolver(RegisterFormSchema, {
       abortEarly: false,
     }),
   });
 
-  const doLogin = useCallback(
-    async ({ email, password }: LoginForm) => {
+  const signUp = useCallback(
+    async ({ email, password, name }: RegisterFormData) => {
       try {
-        await signIn({ email, password });
-        history.push('/dashboard');
-        toast.success('Login realizado com sucesso');
+        await api.post('/parents', { email, password, name });
+        toast.success('Cadastro realizado com sucesso');
+
+        history.push('/');
       } catch (error: any) {
         if (axios.isAxiosError(error)) {
           if (error.response?.status === 401) {
             toast.error('E-mail e/ou senha inválido(s) 😢');
-          } else {
-            toast.error('Serviço indisponível no momento!');
+          } else if (error.response?.status === 400) {
+            if (error.response.data.message === 'An account already exists with this e-mail')
+              toast.error('Já existe uma conta com este e-mail!');
           }
         } else {
           console.error(error);
@@ -64,15 +60,22 @@ const Login: React.FC = () => {
         }
       }
     },
-    [signIn, history]
+    [history]
   );
 
   return (
     <>
       <Container>
         <Content>
-          <h3>Login</h3>
-          <form onSubmit={handleSubmit(doLogin)}>
+          <h3>Cadastre-se</h3>
+          <form onSubmit={handleSubmit(signUp)}>
+            <Input
+              id="name"
+              placeholder="Digite seu nome"
+              icon={RiUser2Fill}
+              error={errors.email}
+              register={register('name')}
+            />
             <Input
               id="email"
               placeholder="Digite seu email"
@@ -92,31 +95,12 @@ const Login: React.FC = () => {
               type="password"
             />
 
-            <Link to="#">Esqueceu sua senha?</Link>
-
-            <Button type="submit">Entrar</Button>
+            <Button type="submit">Cadastrar</Button>
           </form>
-
-          <Link to="register">Criar conta</Link>
-
-          {/* Social media */}
-
-          <p>Entrar com</p>
-
-          <SocialMediaGroup>
-            <ul>
-              <li>
-                <RiFacebookCircleFill color="#3b5998" size={35} />
-              </li>
-              <li>
-                <RiGithubFill size={35} />
-              </li>
-            </ul>
-          </SocialMediaGroup>
         </Content>
       </Container>
     </>
   );
 };
 
-export default Login;
+export default Register;

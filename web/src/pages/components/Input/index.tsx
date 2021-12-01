@@ -15,6 +15,19 @@ const Input: React.FC<InputProps> = ({ register, error, errorIcon: ErrorIcon, ic
   const [isFocused, setIsFocused] = useState(false);
   const { onChange: registerOnChange } = { ...register };
 
+  // const handleDateInput = useCallback(
+  //   (dateString: string) => {
+  //     if (dateString.match(/^\d{2}$/) !== null) {
+  //       dateString = dateString + '/';
+  //     } else if (dateString.match(/^\d{2}\/\d{2}$/) !== null) {
+  //       dateString = dateString + '/';
+  //     }
+
+  //     return dateString;
+  //   },
+  //   [isFilled]
+  // );
+
   const handleOnChange = useCallback(
     (e: FormEvent<HTMLInputElement>) => {
       registerOnChange(e);

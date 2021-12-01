@@ -33,6 +33,15 @@ export const Content = styled.div`
     color: #000;
   }
 
+  input[type='date'] {
+    -webkit-align-items: center;
+    display: -webkit-inline-flex;
+    font-family: monospace;
+    overflow: hidden;
+    padding: 0;
+    -webkit-padding-start: 1px;
+  }
+
   form {
     width: 80%;
     margin: 24px;
@@ -42,10 +51,8 @@ export const Content = styled.div`
     a {
       margin-top: 8px;
       display: flex;
-      align-self: flex-end;
-      width: 160px;
       justify-content: right;
-      color: #000;
+      color: #333333;
     }
 
     button {
@@ -83,11 +90,4 @@ export const Content = styled.div`
       }
     }
   }
-`;
-
-export const SocialMediaGroup = styled.div`
-  margin: 28px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
 `;
