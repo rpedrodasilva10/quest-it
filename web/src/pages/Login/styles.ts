@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+  overflow: hidden;
   width: 100%;
   min-height: 100vh;
   display: -webkit-box;
