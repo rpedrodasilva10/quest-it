@@ -39,11 +39,17 @@ export default createGlobalStyle`
 
   button {
     cursor: pointer;
+    transition: color 0.2s;
+    transition: background-color 0.2s;
   }
 
   a {
     text-decoration: none;
+    transition: color 0.2s;
+    transition: background-color 0.2s;
+
+    &:link, &:visited {
+      text-decoration: none;
+    }
   }
-
-
 `;
