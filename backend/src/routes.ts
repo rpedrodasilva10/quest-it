@@ -18,6 +18,7 @@ router.get('/parents/:id', ParentController.getParentById);
 router.post('/children', ChildController.createChild);
 router.get('/parents/:id/children', ParentController.getChildren);
 
+router.get('/parents/:id/quests', QuestController.getAllQuestsByParent);
 router.post('/parents/:id/quests', QuestController.createQuest);
 router.get('/quests', QuestController.getAllQuests);
 router.post('/quests/:id/start', QuestController.startQuest);

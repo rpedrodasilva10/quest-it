@@ -32,6 +32,16 @@ class QuestService {
     return await prismaClient.quest.findMany();
   }
 
+  async getQuestsByParent(parentId: number) {
+    console.log('QuestService.getQuestsByParent');
+
+    return await prismaClient.quest.findMany({
+      where: {
+        parentId: Number(parentId),
+      },
+    });
+  }
+
   async startQuest(questId: string, childId: string) {
     console.log('QuestService.startQuest');
 

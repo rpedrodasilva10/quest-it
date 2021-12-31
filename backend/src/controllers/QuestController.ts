@@ -10,6 +10,16 @@ class QuestController {
     return res.json(await service.getQuests());
   }
 
+  async getAllQuestsByParent(req: Request, res: Response) {
+    const parentId = req.params.id;
+    const parentService = new ParentService();
+    const parent = await parentService.getParentById(parentId);
+
+    const service = new QuestService();
+
+    return res.json(await service.getQuestsByParent(parent.id));
+  }
+
   async createQuest(req: Request, res: Response) {
     const parentId = req.params.id;
     const parentService = new ParentService();
