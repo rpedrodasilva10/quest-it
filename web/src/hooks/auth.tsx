@@ -6,13 +6,21 @@ interface SignInCredentials {
   password: string;
 }
 
+type User = {
+  id: number;
+  name: string;
+  email: string;
+  type: 'PARENT' | 'CHILDREN';
+};
+
 type AuthData = {
-  user: object;
+  user: User;
   token: string;
 };
 
 interface AuthContextData {
-  user: object;
+  user: User;
+  token: string;
   signIn({ email, password }: SignInCredentials): Promise<void>;
   signOut(): void;
 }
@@ -44,7 +52,11 @@ const AuthProvider: React.FC = ({ children }) => {
     setAuthData({} as AuthData);
   }, []);
 
-  return <AuthContext.Provider value={{ user: authData.user, signIn, signOut }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ user: authData.user, token: authData.token, signIn, signOut }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 function useAuth(): AuthContextData {
