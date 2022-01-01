@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-export const Container = styled.div``;
-
 export const Header = styled.header`
   //padding-top: 8px;
 `;
@@ -45,6 +43,8 @@ export const ProfileContainer = styled.div`
   align-items: center;
   background-color: #fff;
   border-radius: 35px;
+
+  border: solid #a49999 0.5px;
 
   img {
     width: 68px;
@@ -143,26 +143,96 @@ export const SearchInputContainer = styled.div`
 `;
 
 export const QuestsContainer = styled.div`
+  padding: 32px;
   width: 100%;
-  height: 500px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  //border: solid red 1px;
 
   gap: 32px;
 `;
 export const QuestCard = styled.div`
+  padding-left: 16px;
   background-color: #fff;
-  border: solid #ffffffe6 1px;
+  border: solid #a49999 1px;
 
   width: 300px;
-  height: 150px;
+  height: 225px;
   border-radius: 10px;
 
   p {
     font-weight: 600;
     display: flex;
     justify-content: center;
+  }
+`;
+
+export const QuestCardProfileContainer = styled.div`
+  width: 225px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 35px;
+
+  img {
+    width: 68px;
+    border-radius: 56px;
+    border: 3px solid #000;
+  }
+
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p {
+      margin-left: 16px;
+      font-size: 24px;
+    }
+  }
+`;
+
+export const StarsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  //background-color: red;
+
+  margin-top: -20px;
+  margin-left: 40px;
+
+  svg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & + svg {
+      margin-left: 8px;
+    }
+  }
+`;
+
+export const CardTextContainer = styled.div`
+  padding: 8px;
+  display: flex;
+  align-items: center;
+
+  p {
+    color: #969e9e;
+    font-size: 16px;
+    line-height: 0;
+  }
+
+  strong {
+    margin-left: 8px;
+    line-height: 14px;
+  }
+  a {
+    margin-left: 42px;
+    transition: color 0.2s;
+    &:hover {
+      color: red;
+    }
   }
 `;
