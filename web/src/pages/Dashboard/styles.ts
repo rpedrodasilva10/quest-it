@@ -150,6 +150,7 @@ export const QuestsContainer = styled.div`
   align-items: center;
 
   gap: 32px;
+  justify-content: center;
 `;
 export const QuestCard = styled.div`
   padding-left: 16px;
