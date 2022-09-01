@@ -8,7 +8,7 @@
     "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/app.ts"
   },
   "dependencies": {
-    "@prisma/client": "^3.6.0",
+    "@prisma/client": "^4.3.1",
     "ansi-regex": "^6.0.1",
     "axios": "^0.24.0",
     "bcrypt": "^5.0.1",
